@@ -46,7 +46,7 @@ def query_set(
         dc.pp.query_set(features=fset, net=ct)
     """
     # Validate
-    assert hasattr(features, "__iter__") and not isinstance(features, (str, bytes)), (
+    assert hasattr(features, "__iter__") and not isinstance(features, str | bytes), (
         "features must be an iterable collection of items such as a list"
     )
     features_set: set = set(features)
