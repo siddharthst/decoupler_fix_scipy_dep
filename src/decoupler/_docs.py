@@ -194,6 +194,14 @@ _tval = """\
 tval
     Whether to return the t-value (``tval=True``) the coefficient of the fitted model (``tval=False``)."""
 
+_n_bg = """\
+n_bg
+    Number indicating the background size."""
+
+_ha_corr = """\
+ha_corr
+    Haldane-Anscombe correction of odds ratio."""
+
 _params = f"""\
 Parameters
 ----------
@@ -252,4 +260,6 @@ docs = DocstringProcessor(
     notest=_notest,
     returns=_returns,
     tval=_tval,
+    n_bg=_n_bg,
+    ha_corr=_ha_corr,
 )
