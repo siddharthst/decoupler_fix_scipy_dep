@@ -4,9 +4,7 @@ import numpy as np
 
 @nb.njit(cache=True)
 def _fdr_bh_single_row(ps_row, m):
-    """
-    Apply Benjamini-Hochberg correction to a single row.
-    """
+    """Apply Benjamini-Hochberg correction to a single row."""
     # Sort the row and get indices
     order = np.argsort(ps_row)
     ps_sorted = ps_row[order]
@@ -43,9 +41,7 @@ def _fdr_bh_single_row(ps_row, m):
 
 @nb.njit(parallel=True, cache=True)
 def _fdr_bh_parallel(ps, m):
-    """
-    Apply Benjamini-Hochberg correction to all rows in parallel.
-    """
+    """Apply Benjamini-Hochberg correction to all rows in parallel."""
     n_rows = ps.shape[0]
     result = np.empty_like(ps, dtype=np.float64)
 
@@ -56,11 +52,7 @@ def _fdr_bh_parallel(ps, m):
 
 
 def _fdr_bh_axis1_numba(ps):
-    """
-    Benjamini–Hochberg adjusted p-values along axis=1 (rows).
-    ps: numpy.ndarray (n_rows, n_tests), values in [0, 1].
-    Returns: numpy.ndarray of same shape.
-    """
+    """Benjamini–Hochberg adjusted p-values along axis=1 (rows)."""
     ps = np.asarray(ps, dtype=np.float64)
     if ps.ndim != 2:
         raise ValueError("ps must be 2D (n_rows, n_tests) for axis=1.")
