@@ -3,12 +3,12 @@ from collections.abc import Callable
 import numpy as np
 import pandas as pd
 import scipy.sparse as sps
-import scipy.stats as sts
 from anndata import AnnData
 from tqdm.auto import tqdm
 
 from decoupler._datatype import DataType
 from decoupler._log import _log
+from decoupler.mt._pv import _fdr_bh_axis1_numba
 from decoupler.pp.data import extract
 from decoupler.pp.net import adjmat, idxmat, prune
 
@@ -115,7 +115,7 @@ def _run(
         pv = pd.DataFrame(pv, index=obs, columns=sources)
         if name != "mlm":
             _log(f"{name} - adjusting p-values by FDR", level="info", verbose=verbose)
-            pv.loc[:, :] = sts.false_discovery_control(pv.values, axis=1, method="bh")
+            pv.loc[:, :] = _fdr_bh_axis1_numba(pv.values)
     else:
         pv = None
     _log(f"{name} - done", level="info", verbose=verbose)
