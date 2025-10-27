@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning][].
 ### Changes
 
 - `tl.rankby_obsm` now accepts `AnnData.obs` column names specified in the `obs_keys` argument.
--
+- `pl.source_targets` now accepts extra arguments through `kw_scatter` and its `top` can be `None`, not displaying any label.
 
 ## 2.1.1
 
