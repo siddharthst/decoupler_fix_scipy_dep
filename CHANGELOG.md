@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning][].
 ### Changes
 
 - `tl.rankby_obsm` now accepts `AnnData.obs` column names specified in the `obs_keys` argument.
-- 
+-
 
 ## 2.1.1
 
