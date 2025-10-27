@@ -234,8 +234,8 @@ def _func_ora(
         If ``None``, the top 5% of positive features are selected.
     n_bm
         Number of bottom-ranked features, based on their magnitude, to select as observed features.
-    n_bg
-        Number indicating the background size.
+    %(n_bg)s
+    %(ha_corr)s
 
     %(returns)s
 

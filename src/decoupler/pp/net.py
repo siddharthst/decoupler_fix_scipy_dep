@@ -79,7 +79,7 @@ def _validate_net(
 
 @docs.dedent
 def prune(
-    features: np.ndarray,
+    features: np.ndarray | None,
     net: pd.DataFrame,
     tmin: int = 5,
     verbose: bool = False,
@@ -110,11 +110,12 @@ def prune(
     """
     # Validate
     vnet = _validate_net(net, verbose=verbose)
-    features_set = set(features)
     assert isinstance(tmin, int | float) and tmin >= 0, "tmin must be numeric and >= 0"
     # Find shared targets between mat and net
-    msk = vnet["target"].isin(features_set)
-    vnet = vnet.loc[msk]
+    if features is not None:
+        features_set = set(features)
+        msk = vnet["target"].isin(features_set)
+        vnet = vnet.loc[msk]
     # Find unique sources with tmin
     sources = vnet["source"].value_counts()
     sources = set(sources[sources >= tmin].index)

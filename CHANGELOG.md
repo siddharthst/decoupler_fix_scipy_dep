@@ -10,9 +10,13 @@ and this project adheres to [Semantic Versioning][].
 
 ## 2.1.2
 
+### Added
+- `pp.query_set` to test overlap between a given feature set against a database of sets.
+
 ### Changes
 
 - `tl.rankby_obsm` now accepts `AnnData.obs` column names specified in the `obs_keys` argument.
+-
 
 ## 2.1.1
 
