@@ -11,12 +11,13 @@ and this project adheres to [Semantic Versioning][].
 ## 2.1.2
 
 ### Added
-- `pp.query_set` to test overlap between a given feature set against a database of sets.
+- `pp.query_set` to test overlap between a given feature set against a database of sets
 
 ### Changes
 
-- `tl.rankby_obsm` now accepts `AnnData.obs` column names specified in the `obs_keys` argument.
-- `pl.source_targets` now accepts extra arguments through `kw_scatter` and its `top` can be `None`, not displaying any label.
+- `tl.rankby_obsm` now accepts `AnnData.obs` column names specified in the `obs_keys` argument
+- `pl.source_targets` now accepts extra arguments through `kw_scatter` and its `top` can be `None`, not displaying any label
+- p-values now are corrected using a custom numba-optimized version of `scipy.stats.false_discovery_control` called `_fdr_bh_axis1_numba`
 
 ## 2.1.1
 
