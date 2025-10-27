@@ -22,6 +22,21 @@ def test_source_targets(
         fig = dc.pl.source_targets(data=deg, net=net, name=name, x="weight", y="stat", return_fig=True)
         assert isinstance(fig, Figure)
         plt.close(fig)
+        fig = dc.pl.source_targets(data=deg, net=net, top=None, name=name, x="weight", y="stat", return_fig=True)
+        assert isinstance(fig, Figure)
+        plt.close(fig)
+        fig = dc.pl.source_targets(
+            data=deg,
+            net=net,
+            top=None,
+            name=name,
+            x="weight",
+            y="stat",
+            return_fig=True,
+            kw_scatter={"alpha": 0.5, "s": 1},
+        )
+        assert isinstance(fig, Figure)
+        plt.close(fig)
     else:
         with pytest.raises(AssertionError):
             dc.pl.source_targets(data=deg, net=net, name=name, x="weight", y="stat", return_fig=True)

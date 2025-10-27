@@ -15,13 +15,14 @@ def source_targets(
     x: str,
     y: str,
     name: str,
-    top: int = 5,
+    top: int | None = 5,
     thr_x: float = 0.0,
     thr_y: float = 0.0,
     max_x: float | None = None,
     max_y: float | None = None,
     color_pos: str = "#D62728",
     color_neg: str = "#1F77B4",
+    kw_scatter: dict | None = None,
     **kwargs,
 ) -> None | Figure:
     """
@@ -38,7 +39,7 @@ def source_targets(
     name
         Name of the source to plot.
     top
-        Number of top features based on the product of x and y to label.
+        Number of top features to show labels based on the product of x and y to label. Can be None.
     thr_x
         Value were to place a baseline for the x-axis.
     thr_y
@@ -51,6 +52,8 @@ def source_targets(
         Color to plot positively associated features.
     color_neg
         Color to plot negatively associated features.
+    kw_scatter
+        Keyword arguments passed to ``matplotlib.pyplot.scatter``.
     %(plot)s
 
     Example
@@ -72,7 +75,9 @@ def source_targets(
     assert not pd.api.types.is_numeric_dtype(data.index), "data index must be features in net"
     assert isinstance(net, pd.DataFrame), f"net must be a pd.DataFrame containing the columns {x} and {y}"
     assert isinstance(name, str), "name must be a str"
-    assert isinstance(top, int) and top > 0, "top must be int and > 0"
+    if top is None:
+        top = 0
+    assert isinstance(top, int) and top >= 0, "top must be int and >= 0"
     assert isinstance(thr_x, int | float), "thr_x must be numeric"
     assert isinstance(thr_y, int | float), "thr_y must be numeric"
     if max_x is None:
@@ -83,6 +88,8 @@ def source_targets(
     assert isinstance(max_y, int | float) and max_y > 0, "max_y must be None, or numeric and > 0"
     assert isinstance(color_pos, str), "color_pos must be str"
     assert isinstance(color_neg, str), "color_neg must be str"
+    if kw_scatter is None:
+        kw_scatter = {}
     # Instance
     bp = Plotter(**kwargs)
     # Extract df
@@ -101,7 +108,7 @@ def source_targets(
     df["color"] = color_neg
     df.loc[pos, "color"] = color_pos
     # Plot
-    df.plot.scatter(x=x, y=y, c="color", ax=bp.ax)
+    df.plot.scatter(x=x, y=y, c="color", ax=bp.ax, **kw_scatter)
     # Draw thr lines
     bp.ax.axvline(x=thr_x, linestyle="--", color="black")
     bp.ax.axhline(y=thr_y, linestyle="--", color="black")
@@ -112,10 +119,11 @@ def source_targets(
     # Show top features
     df["order"] = df[x].abs() * df[y].abs()
     signs = df.sort_values("order", ascending=False)
-    signs = signs.iloc[:top]
-    texts = []
-    for tx, ty, ts in zip(signs[x], signs[y], signs.index, strict=False):
-        texts.append(bp.ax.text(tx, ty, ts))
-    if len(texts) > 0:
-        at.adjust_text(texts, arrowprops={"arrowstyle": "-", "color": "black"}, ax=bp.ax)
+    if top > 0:
+        signs = signs.iloc[:top]
+        texts = []
+        for tx, ty, ts in zip(signs[x], signs[y], signs.index, strict=False):
+            texts.append(bp.ax.text(tx, ty, ts))
+        if len(texts) > 0:
+            at.adjust_text(texts, arrowprops={"arrowstyle": "-", "color": "black"}, ax=bp.ax)
     return bp._return()
