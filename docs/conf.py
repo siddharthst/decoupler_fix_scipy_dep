@@ -21,7 +21,7 @@ sys.path.insert(0, str(HERE / "extensions"))
 info = metadata("decoupler")
 project_name = info["Name"]
 author = info["Author"]
-copyright = f"{datetime.now():%Y}, {author}."
+copyright = f"{datetime.now():%Y}, scverse."
 version = info["Version"]
 urls = dict(pu.split(", ") for pu in info.get_all("Project-URL"))
 repository_url = urls["Source"]
@@ -36,7 +36,7 @@ needs_sphinx = "4.0"
 
 html_context = {
     "display_github": True,  # Integrate GitHub
-    "github_user": "PauBadiaM",
+    "github_user": "scverse",
     "github_repo": project_name,
     "github_version": "main",
     "conf_py_path": "/docs/",
@@ -96,6 +96,8 @@ intersphinx_mapping = {
     "anndata": ("https://anndata.readthedocs.io/en/stable/", None),
     "scanpy": ("https://scanpy.readthedocs.io/en/stable/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
+    "matplotlib": ("https://matplotlib.org/stable/", None),
+    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
 }
 
 # List of patterns, relative to source directory, that match files and
@@ -114,6 +116,8 @@ html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
 
 html_title = project_name
+html_logo = "_static/images/logo.png"
+html_favicon = "_static/images/logo.png"
 
 html_theme_options = {
     "repository_url": repository_url,

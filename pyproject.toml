@@ -4,12 +4,12 @@ requires = [ "hatchling" ]
 
 [project]
 name = "decoupler"
-version = "0.0.1"
+version = "2.1.2"
 description = "Python package to perform enrichment analysis from omics data."
 readme = "README.md"
 license = { file = "LICENSE" }
 maintainers = [
-  { name = "Pau Badia i Mompel", email = "pau.badia@uni-heidelberg.de" },
+  { name = "Pau Badia i Mompel", email = "paubim@stanford.edu" },
 ]
 authors = [
   { name = "Pau Badia i Mompel" },
@@ -23,9 +23,16 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
+  "adjusttext",
   "anndata",
+  "docrep",
+  "marsilea",
+  "numba",
+  "requests",
+  "scipy<1.16", # https://github.com/statsmodels/statsmodels/issues/9584
   # for debug logging (referenced from the issue template)
   "session-info2",
+  "tqdm",
 ]
 optional-dependencies.dev = [
   "pre-commit",
@@ -47,15 +54,32 @@ optional-dependencies.doc = [
   "sphinxcontrib-bibtex>=1",
   "sphinxext-opengraph",
 ]
+optional-dependencies.full = [
+  "dcor",
+  "igraph",
+  "ipywidgets",
+  "pydeseq2",
+  "scanpy",
+  "xgboost",
+]
 optional-dependencies.test = [
   "coverage>=7.10",
+  "dcor",
+  "gseapy",
+  "igraph",
+  "ipywidgets",
+  "memory-profiler",
+  "pydeseq2",
   "pytest",
-  "pytest-cov",     # For VS Code’s coverage functionality
+  "pytest-cov",      # For VS Code’s coverage functionality
+  "scanpy",
+  "statsmodels",
+  "xgboost",
 ]
 # https://docs.pypi.org/project_metadata/#project-urls
 urls.Documentation = "https://decoupler.readthedocs.io/"
-urls.Homepage = "https://github.com/PauBadiaM/decoupler"
-urls.Source = "https://github.com/PauBadiaM/decoupler"
+urls.Homepage = "https://github.com/scverse/decoupler"
+urls.Source = "https://github.com/scverse/decoupler"
 
 [tool.hatch.envs.default]
 installer = "uv"
