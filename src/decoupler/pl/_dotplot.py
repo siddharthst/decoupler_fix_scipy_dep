@@ -19,6 +19,7 @@ def dotplot(
     scale: int | float = 0.15,
     cmap: str = "RdBu_r",
     vcenter: int | float | None = None,
+    kw_scatter: dict | None = None,
     **kwargs,
 ) -> None | Figure:
     """
@@ -41,6 +42,8 @@ def dotplot(
         Scale of the dots.
     %(cmap)s
     %(vcenter)s
+    kw_scatter
+        Keyword arguments passed to ``matplotlib.pyplot.scatter``.
     %(plot)s
 
     Example
@@ -77,6 +80,8 @@ def dotplot(
     assert isinstance(top, int | float) and top > 0, "top must be numerical and > 0"
     assert isinstance(scale, int | float), "scale must be numerical"
     assert isinstance(vcenter, int | float) or vcenter is None, "vcenter must be numeric or None"
+    if kw_scatter is None:
+        kw_scatter = {}
     # Filter by top
     df = df.copy()
     df["abs_x_col"] = df[x].abs()
@@ -101,14 +106,7 @@ def dotplot(
         norm = TwoSlopeNorm(vmin=None, vcenter=vcenter, vmax=None)
     else:
         norm = None
-    scatter = bp.ax.scatter(
-        x=x_vals,
-        y=y_vals,
-        c=c_vals,
-        s=ns,
-        cmap=cmap,
-        norm=norm,
-    )
+    scatter = bp.ax.scatter(x=x_vals, y=y_vals, c=c_vals, s=ns, cmap=cmap, norm=norm, **kw_scatter)
     bp.ax.set_axisbelow(True)
     bp.ax.set_xlabel(x)
     # Add legend

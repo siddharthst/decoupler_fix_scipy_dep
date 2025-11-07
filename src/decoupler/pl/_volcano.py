@@ -23,6 +23,7 @@ def volcano(
     color_pos: str = "#D62728",
     color_neg: str = "#1F77B4",
     color_null: str = "gray",
+    kw_scatter: dict | None = None,
     **kwargs,
 ) -> None | Figure:
     """
@@ -54,6 +55,8 @@ def volcano(
         Color to plot significant negative features.
     color_null
         Color to plot rest of the genes.
+    kw_scatter
+        Keyword arguments passed to ``matplotlib.pyplot.scatter``.
     %(plot)s
 
     Example
@@ -85,6 +88,8 @@ def volcano(
     assert isinstance(color_pos, str), "color_pos must be str"
     assert isinstance(color_neg, str), "color_neg must be str"
     assert isinstance(color_null, str), "color_null must be str"
+    if kw_scatter is None:
+        kw_scatter = {}
     # Instance
     bp = Plotter(**kwargs)
     # Transform thr_sign
@@ -111,7 +116,7 @@ def volcano(
     df.loc[up_msk, "weight"] = color_pos
     df.loc[dw_msk, "weight"] = color_neg
     # Plot
-    df.plot.scatter(x="stat", y="pval", c="weight", sharex=False, ax=bp.ax)
+    df.plot.scatter(x="stat", y="pval", c="weight", sharex=False, ax=bp.ax, **kw_scatter)
     bp.ax.set_axisbelow(True)
     # Draw thr lines
     bp.ax.axvline(x=thr_stat, linestyle="--", color="black")

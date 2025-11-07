@@ -39,6 +39,7 @@ def barplot(
     vmin: float | None = None,
     vcenter: float | None = 0,
     vmax: float | None = None,
+    kw_barplot: dict | None = None,
     **kwargs,
 ) -> None | Figure:
     """
@@ -57,6 +58,8 @@ def barplot(
     %(vmin)s
     %(vcenter)s
     %(vmax)s
+    kw_barplot
+        Keyword arguments passed to ``seaborn.barplot``.
     %(plot)s
 
     Example
@@ -78,6 +81,8 @@ def barplot(
     assert isinstance(name, str) and name in data.index, "name must be str and in data.index"
     assert isinstance(top, int) and top > 0, "top must be int and > 0"
     assert isinstance(vertical, bool), "vertical must be bool"
+    if kw_barplot is None:
+        kw_barplot = {}
     # Process df
     df = data.loc[[name]]
     df.index.name = None
@@ -93,7 +98,7 @@ def barplot(
     # Instance
     bp = Plotter(**kwargs)
     # Plot
-    sns.barplot(data=df, x=x, y=y, ax=bp.ax)
+    sns.barplot(data=df, x=x, y=y, ax=bp.ax, **kw_barplot)
     if not vertical:
         sizes = np.array([bar.get_width() for bar in bp.ax.containers[0]])
         bp.ax.set_xlabel("Score")

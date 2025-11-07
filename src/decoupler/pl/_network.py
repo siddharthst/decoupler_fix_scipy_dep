@@ -179,17 +179,18 @@ def network(
     score: pd.DataFrame = None,
     sources: int | list | str = 5,
     targets: int | list | str = 10,
-    by_abs=True,
-    size_node=5,
-    size_label=2.5,
-    s_cmap="RdBu_r",
-    t_cmap="viridis",
-    vcenter=False,
-    c_pos_w="darkgreen",
-    c_neg_w="darkred",
-    s_label="Enrichment\nscore",
-    t_label="Gene\nexpression",
-    layout="kk",
+    by_abs: bool = True,
+    size_node: int = 5,
+    size_label: float | int = 2.5,
+    s_cmap: str = "RdBu_r",
+    t_cmap: str = "viridis",
+    vcenter: bool = False,
+    c_pos_w: str = "darkgreen",
+    c_neg_w: str = "darkred",
+    s_label: str = "Enrichment\nscore",
+    t_label: str = "Gene\nexpression",
+    layout: str = "kk",
+    kw_igraph: dict | None = None,
     **kwargs,
 ):
     """
@@ -228,6 +229,8 @@ def network(
         Label to place in the target colorbar.
     layout
         Layout to use to order the nodes. Check ``igraph`` documentation for more options.
+    kw_igraph
+        Keyword arguments passed to ``igraph.plot``.
     %(plot)s
 
     Example
@@ -249,6 +252,8 @@ def network(
         data = pd.DataFrame(np.ones((1, trgs.size)), index=["0"], columns=trgs)
         s_cmap = "white"
         t_cmap = "white"
+    if kw_igraph is None:
+        kw_igraph = {}
     # Filter
     fdata, fscore, fnet = _filter(
         data=data,
@@ -283,14 +288,9 @@ def network(
     ax2 = bp.fig.add_subplot(gs[-1, 0])
     ax3 = bp.fig.add_subplot(gs[-1, 1])
     ax4 = bp.fig.add_subplot(gs[-1, -1])
-    ig.plot(
-        g,
-        target=ax1,
-        layout=layout,
-        vertex_size=(size_node * bp.dpi) / (bp.figsize[0] * bp.figsize[0]),
-        vertex_size_label=(size_label * bp.dpi) / (bp.figsize[0] * bp.figsize[0]),
-        bbox_inches="tight",
-    )
+    kw_igraph.setdefault("layout", layout)
+    kw_igraph.setdefault("vertex_size", (size_node * bp.dpi) / (bp.figsize[0] * bp.figsize[0]))
+    ig.plot(g, target=ax1, bbox_inches="tight", **kw_igraph)
     if is_cmap:
         sm = matplotlib.cm.ScalarMappable(norm=s_norm, cmap=s_cmap)
         bp.fig.colorbar(sm, cax=ax2, orientation="horizontal", label=s_label)

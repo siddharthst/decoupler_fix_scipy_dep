@@ -18,6 +18,6 @@ def test_filter_samples(
     groupby,
     log,
 ):
-    fig = dc.pl.filter_samples(adata=pdata, groupby=groupby, log=log, return_fig=True)
+    fig = dc.pl.filter_samples(adata=pdata, groupby=groupby, log=log, return_fig=True, kw_scatterplot={"alpha": 0.5})
     assert isinstance(fig, Figure)
     plt.close(fig)
