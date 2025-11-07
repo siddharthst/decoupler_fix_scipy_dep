@@ -21,7 +21,7 @@ sys.path.insert(0, str(HERE / "extensions"))
 info = metadata("decoupler")
 project_name = info["Name"]
 author = info["Author"]
-copyright = f"{datetime.now():%Y}, scverse"
+copyright = f"{datetime.now():%Y}, scverse."
 version = info["Version"]
 urls = dict(pu.split(", ") for pu in info.get_all("Project-URL"))
 repository_url = urls["Source"]
@@ -114,6 +114,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 html_theme = "sphinx_book_theme"
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
+
 html_title = project_name
 html_logo = "_static/images/logo.png"
 html_favicon = "_static/images/logo.png"
@@ -127,7 +128,7 @@ html_theme_options = {
 
 pygments_style = "default"
 
-nitpick_ignore: list = [
+nitpick_ignore = [
     # If building the documentation fails because of a missing link that is outside your control,
     # you can add an exception to this list.
     #     ("py:class", "igraph.Graph"),
