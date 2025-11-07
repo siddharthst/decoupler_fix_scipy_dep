@@ -25,6 +25,15 @@ def test_dotplot(
     df,
     vcenter,
 ):
-    fig = dc.pl.dotplot(df=df, x="x", y="y", c="c", s="s", vcenter=vcenter, return_fig=True)
+    fig = dc.pl.dotplot(
+        df=df,
+        x="x",
+        y="y",
+        c="c",
+        s="s",
+        vcenter=vcenter,
+        return_fig=True,
+        kw_scatter={"alpha": 0.5},
+    )
     assert isinstance(fig, Figure)
     plt.close(fig)

@@ -70,6 +70,7 @@ def test_network(
         vcenter=vcenter,
         s_cmap=s_cmap,
         figsize=(5, 5),
+        kw_igraph={"vertex_color": "green"},
         return_fig=True,
     )
     assert isinstance(fig, Figure)

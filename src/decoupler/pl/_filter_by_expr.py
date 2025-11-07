@@ -19,6 +19,7 @@ def filter_by_expr(
     large_n: int = 10,
     min_prop: float = 0.7,
     cmap: str = "viridis",
+    kw_histplot: dict | None = None,
     **kwargs,
 ) -> None | Figure:
     """
@@ -34,6 +35,8 @@ def filter_by_expr(
     %(min_total_count)s
     %(large_n)s
     %(min_prop_expr)s
+    kw_histplot
+        Keyword arguments passed to ``seaborn.histplot``.
     %(plot)s
 
     Example
@@ -50,6 +53,8 @@ def filter_by_expr(
     X, _, _ = extract(adata, empty=False)
     isbacked = isinstance(X, tuple)
     assert not isbacked, "adata is in backed mode, reload adata without backed='r'"
+    if kw_histplot is None:
+        kw_histplot = {}
     obs = adata.obs
     # Minimum sample size cutoff
     min_sample_size = _min_sample_size(
@@ -77,6 +82,7 @@ def filter_by_expr(
         cbar_kws={"shrink": 0.75, "label": "Number of genes"},
         discrete=(False, True),
         ax=bp.ax,
+        **kw_histplot,
     )
     bp.ax.axhline(y=min_sample_size - 0.5, c="gray", ls="--")
     bp.ax.axvline(x=np.log10(min_total_count), c="gray", ls="--")

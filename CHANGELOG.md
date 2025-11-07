@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning][].
 ### Changes
 
 - `tl.rankby_obsm` now accepts `AnnData.obs` column names specified in the `obs_keys` argument
-- `pl.source_targets` now accepts extra arguments through `kw_scatter` and its `top` can be `None`, not displaying any label
+- Most plotting functions now accept extra arguments through `kw_` arguments.
 - p-values now are corrected using a custom numba-optimized version of `scipy.stats.false_discovery_control` called `_fdr_bh_axis1_numba`
 
 ## 2.1.1

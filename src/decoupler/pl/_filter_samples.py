@@ -16,6 +16,7 @@ def filter_samples(
     log: bool = True,
     min_cells: int | float = 10,
     min_counts: int | float = 1000,
+    kw_scatterplot: dict | None = None,
     **kwargs,
 ) -> None | Figure:
     """
@@ -30,6 +31,8 @@ def filter_samples(
         If set, log10 transform the ``psbulk_n_cells`` and ``psbulk_counts`` columns during visualization.
     %(min_cells)s
     %(min_counts)s
+    kw_scatterplot
+        Keyword arguments passed to ``seaborn.scatterplot``.
     %(plot)s
 
     Example
@@ -56,6 +59,8 @@ def filter_samples(
         groupby = [groupby]
     if groupby:
         assert all(col in adata.obs for col in groupby), "columns in groupby must be in adata.obs"
+    if kw_scatterplot is None:
+        kw_scatterplot = {}
     # Extract obs
     df = adata.obs.copy()
     # Transform to log10
@@ -78,7 +83,7 @@ def filter_samples(
         for ax, grp in zip(axes, groupby, strict=False):
             ax.grid(zorder=0)
             ax.set_axisbelow(True)
-            sns.scatterplot(x="psbulk_cells", y="psbulk_counts", hue=grp, ax=ax, data=df, zorder=1)
+            sns.scatterplot(x="psbulk_cells", y="psbulk_counts", hue=grp, ax=ax, data=df, zorder=1, **kw_scatterplot)
             ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), frameon=False, title=grp)
             ax.set_xlabel(label_x)
             ax.set_ylabel(label_y)
@@ -91,7 +96,7 @@ def filter_samples(
         bp = Plotter(**kwargs)
         bp.ax.grid(zorder=0)
         bp.ax.set_axisbelow(True)
-        sns.scatterplot(x="psbulk_cells", y="psbulk_counts", hue=groupby, ax=bp.ax, data=df, zorder=1)
+        sns.scatterplot(x="psbulk_cells", y="psbulk_counts", hue=groupby, ax=bp.ax, data=df, zorder=1, **kw_scatterplot)
         if groupby:
             bp.ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), frameon=False, title=groupby)
         bp.ax.set_xlabel(label_x)

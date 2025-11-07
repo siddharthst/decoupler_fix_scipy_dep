@@ -34,6 +34,6 @@ def test_barplot(
     vertical,
     vcenter,
 ):
-    fig = dc.pl.barplot(data=df, name=name, top=top, vertical=vertical, return_fig=True)
+    fig = dc.pl.barplot(data=df, name=name, top=top, vertical=vertical, return_fig=True, kw_barplot={"alpha": 0.5})
     assert isinstance(fig, Figure)
     plt.close(fig)

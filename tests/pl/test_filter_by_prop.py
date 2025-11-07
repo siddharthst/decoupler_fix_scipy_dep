@@ -7,6 +7,6 @@ import decoupler as dc
 def test_filter_by_prop(
     pdata,
 ):
-    fig = dc.pl.filter_by_prop(adata=pdata, return_fig=True)
+    fig = dc.pl.filter_by_prop(adata=pdata, return_fig=True, kw_hist={"alpha": 0.5})
     assert isinstance(fig, Figure)
     plt.close(fig)
