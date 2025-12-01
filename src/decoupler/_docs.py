@@ -41,7 +41,18 @@ verbose
 
 _data = """\
 data
-    AnnData instance, DataFrame or tuple of [matrix, samples, features]."""
+    ``anndata.AnnData`` instance, ``pandas.DataFrame``, or a tuple of ``(matrix, samples, features)``.
+    All methods assume that input values follow a normal distribution unless
+    otherwise specified. Therefore, when working with observational count data, some form of
+    normalization is required (e.g., ``scanpy``'s library-size normalization followed
+    by log1p). Using raw integer counts is not recommended, as they follow a Poisson distribution.
+
+    Feature scaling on normalized counts is also acceptable, but note that it changes
+    the results by assuming equal importance across features, and outcomes will vary
+    depending on which observations are included.
+
+    No normalization or transformation is required when using contrast-level
+    feature statistics such as log fold changes or Wald test statistics."""
 
 _layer = """\
 layer

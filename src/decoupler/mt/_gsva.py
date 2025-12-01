@@ -349,7 +349,7 @@ def _func_gsva(
     %(params)s
     kcdf
         Which kernel to use during the non-parametric estimation of the cumulative distribution function.
-        Options are gaussian, poisson or None.
+        Options are gaussian, poisson or None. The default is gaussian.
     mx_diff
         Changes how the enrichment statistic (ES) is calculated.
         If ``True`` (default), ES is calculated as the difference between the maximum positive and
