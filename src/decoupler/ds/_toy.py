@@ -113,7 +113,9 @@ def toy(
         _log(m, level="info", verbose=verbose)
         pst = np.arange(adata.n_obs)
         pst = pst / pst.max()
-        adata.X[:, :8] = adata.X[:, :8] + (adata.X[:, :8] * pst.reshape(-1, 1))
+        X = adata.X.copy()
+        X[:, :8] = adata.X[:, :8] + (adata.X[:, :8] * pst.reshape(-1, 1))
+        adata.X = X
         adata.obs["pstime"] = pst
     m = f"toy - generated AnnData with shape={adata.shape}"
     _log(m, level="info", verbose=verbose)
