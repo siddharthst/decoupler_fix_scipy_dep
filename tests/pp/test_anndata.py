@@ -73,11 +73,19 @@ def test_pseudobulk(
     adata.obs["sample"] = adata.obs["sample"]
     adata.obs["dose"] = rng.choice(["low", "medium", "high"], size=adata.n_obs, replace=True)
     if empty:
-        adata.X[:, 3] = 0.0
-        adata.layers["counts"][:, 3] = 0.0
+        X = adata.X.copy()
+        X[:, 3] = 0.0
+        adata.X = X
+        X = adata.layers["counts"].copy()
+        X[:, 3] = 0.0
+        adata.layers["counts"] = X
         msk = adata.obs["sample"] == "S01"
-        adata.X[msk, :] = 0.0
-        adata.layers["counts"][msk, :] = 0.0
+        X = adata.X.copy()
+        X[msk, :] = 0.0
+        adata.X = X
+        X = adata.layers["counts"].copy()
+        X[msk, :] = 0.0
+        adata.layers["counts"] = X
     if sparse:
         adata.X = sps.csr_matrix(adata.X)
     if mode == "sum":
