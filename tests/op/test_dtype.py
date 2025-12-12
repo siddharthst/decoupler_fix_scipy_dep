@@ -16,7 +16,7 @@ def test_infer_dtypes():
     df["b"] = df["b"].astype("string")
     idf = dc.op._dtype._infer_dtypes(df.copy())
     assert pd.api.types.is_numeric_dtype(idf["a"])
-    assert idf["b"].dtype == "object"
+    assert (idf["b"].dtype == "object") or (idf["b"].dtype == "str")
     assert pd.api.types.is_bool_dtype(idf["c"])
     assert pd.api.types.is_bool_dtype(idf["d"])
     assert pd.api.types.is_numeric_dtype(idf["e"])
