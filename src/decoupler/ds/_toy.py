@@ -169,5 +169,7 @@ def toy_bench(shuffle_r: float = 0.25, seed: int = 42, verbose: bool = False, **
         _log(m, level="info", verbose=verbose)
         idxs = rng.choice(idxs, n_shuffle, replace=False)
         r_idxs = rng.choice(idxs, idxs.size, replace=False)
-        adata.X[r_idxs, :] = adata.X[idxs, :]
+        X = adata.X.copy()
+        X[r_idxs, :] = adata.X[idxs, :]
+        adata.X = X
     return adata, net
