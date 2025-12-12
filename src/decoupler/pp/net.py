@@ -308,12 +308,12 @@ def shuffle_net(
         rng = np.random.default_rng(seed=seed)
         vals = rnet["target"].values
         rng.shuffle(vals)
-        rnet['target'] = vals
+        rnet["target"] = vals
     if weight:
         rng = np.random.default_rng(seed=seed + int(not same_seed))
         vals = rnet["weight"].values
         rng.shuffle(vals)
-        rnet['weight'] = vals
+        rnet["weight"] = vals
     return rnet.drop_duplicates(["source", "target"], keep="first")
 
 
