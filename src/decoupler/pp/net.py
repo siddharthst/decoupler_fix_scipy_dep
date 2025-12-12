@@ -192,7 +192,7 @@ def adjmat(
     adjm = _order(features, targets, adjm)
     m = f"Network adjacency matrix has {targets.size} unique features and {sources.size} unique sources"
     _log(m, level="info", verbose=verbose)
-    return sources, targets, adjm
+    return sources, features, adjm
 
 
 @docs.dedent
