@@ -70,7 +70,7 @@ def test_pseudobulk(
 ):
     adata, _ = dc.ds.toy(nobs=10000, nvar=500, bval=2, seed=42, verbose=False)
     adata.layers["counts"] = adata.X.round()
-    adata.obs["sample"] = adata.obs["sample"].astype("object")
+    adata.obs["sample"] = adata.obs["sample"]
     adata.obs["dose"] = rng.choice(["low", "medium", "high"], size=adata.n_obs, replace=True)
     if empty:
         adata.X[:, 3] = 0.0
