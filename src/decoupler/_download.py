@@ -3,6 +3,7 @@ import io
 import pandas as pd
 import requests
 from tqdm import tqdm
+import time
 
 from decoupler._log import _log
 
@@ -10,7 +11,7 @@ URL_DBS = "https://omnipathdb.org/annotations?databases="
 URL_INT = "https://omnipathdb.org/interactions/?genesymbols=1&"
 
 
-def _download(
+def _download_chunks(
     url: str,
     verbose: bool = False,
 ) -> io.BytesIO:
@@ -28,6 +29,35 @@ def _download(
                     pbar.update(len(chunk))
     # Read into bytes
     data = io.BytesIO(b"".join(chunks))
+    m = "Download finished"
+    _log(m, level="info", verbose=verbose)
+    return data
+
+
+def _download(
+    url: str,
+    verbose: bool = False,
+    retries: int = 5,
+    wait_time: int = 20,
+) -> io.BytesIO:
+    m = f"Downloading {url}"
+    _log(m, level="info", verbose=verbose)
+    data = None
+    for attempt in range(1, retries + 1):
+        try:
+            data = _download_chunks(url, verbose=False)
+            break
+        except requests.exceptions.HTTPError as e:
+            status_code = e.response.status_code if e.response is not None else None
+            if status_code == 429 and attempt < retries:
+                _log(
+                    f"429 Too Many Requests for {url}. Retrying in {wait_time}s (attempt {attempt + 1}/{retries})",
+                    level="warn",
+                    verbose=verbose,
+                )
+                time.sleep(wait_time)
+                continue
+            raise  # Not a 429 or no retries left: re-raise
     m = "Download finished"
     _log(m, level="info", verbose=verbose)
     return data

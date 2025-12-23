@@ -11,8 +11,9 @@ and this project adheres to [Semantic Versioning][].
 ## 2.1.3
 
 ### Changes
-- `pp.adjmat` now returns the same features as used as input instead of the subset of `net`.
-- `pp.pseudobulk` now returns the same order features as used as input instead of shuffling them.
+- `pp.adjmat` now returns the same features as used as input instead of the subset of `net`
+- `pp.pseudobulk` now returns the same order features as used as input instead of shuffling them
+- Added 5 attemps to `_download` to mitigate 429 Client Error from Zenodo downloads
 
 ## 2.1.2
 
