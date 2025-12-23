@@ -113,6 +113,7 @@ def test_pseudobulk(
         assert pdata.shape[1] < adata.shape[1]
     else:
         assert pdata.shape[1] == adata.shape[1]
+        assert all(pdata.var_names == pdata.var_names)
     assert not pdata.obs["sample"].str.contains("_").any()
     obs_cols = {"psbulk_cells", "psbulk_counts"}
     assert obs_cols.issubset(pdata.obs.columns)

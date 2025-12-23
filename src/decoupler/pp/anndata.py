@@ -366,7 +366,7 @@ def pseudobulk(
     assert isinstance(groups_col, str | list) or groups_col is None, "groups_col must be str or None"
     assert isinstance(mode, str | dict) or callable(mode), "mode must be str, dict or callable"
     # Extract data
-    X, obs, var = extract(adata, layer=layer, raw=raw, empty=empty, bsize=bsize, verbose=verbose)
+    X, obs, var = extract(adata, layer=layer, raw=raw, empty=empty, bsize=bsize, shuffle=False, verbose=verbose)
     assert len(set(obs)) == len(obs), (
         "Repeated elements in adata.obs_names, to make them unique run adata.obs_names_make_unique()"
     )
@@ -597,7 +597,7 @@ def filter_by_expr(
     assert isinstance(large_n, int | float) and large_n >= 0, "large_n must be numeric and > 0"
     assert isinstance(min_prop, int | float) and 1 >= min_prop >= 0, "min_prop must be numeric and between 0 and 1"
     # Extract inputs
-    X, _, var_names = extract(adata, empty=False)
+    X, _, var_names = extract(adata, empty=False, shuffle=False)
     isbacked = isinstance(X, tuple)
     assert not isbacked, "adata is in backed mode, reload adata without backed='r'"
     obs = adata.obs

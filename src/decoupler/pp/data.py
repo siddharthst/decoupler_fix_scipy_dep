@@ -132,6 +132,7 @@ def extract(
     layer: str | None = None,
     raw: bool = False,
     empty: bool = True,
+    shuffle: bool = True,
     verbose: bool = False,
     bsize: int = 250_000,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray] | tuple[tuple[np.ndarray, np.ndarray], np.ndarray, np.ndarray]:
@@ -144,6 +145,8 @@ def extract(
     %(layer)s
     %(raw)s
     %(empty)s
+    shuffle
+        Whether to shuffle features to ensure ties are broken.
     %(verbose)s
 
     Returns
@@ -169,7 +172,8 @@ def extract(
     if not isbacked:
         mat, row, col = _validate_mat(mat=mat, row=row, col=col, empty=empty, verbose=verbose)
         # Randomly sort features
-        mat, col = _break_ties(mat=mat, features=col)
+        if shuffle:
+            mat, col = _break_ties(mat=mat, features=col)
         mat_tuple = (mat, row, col)
     else:
         msk_col = _validate_backed(mat=mat, row=row, col=col, empty=empty, verbose=verbose, bsize=bsize)
