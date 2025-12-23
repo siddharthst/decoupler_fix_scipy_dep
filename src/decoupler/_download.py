@@ -1,9 +1,9 @@
 import io
+import time
 
 import pandas as pd
 import requests
 from tqdm import tqdm
-import time
 
 from decoupler._log import _log
 
