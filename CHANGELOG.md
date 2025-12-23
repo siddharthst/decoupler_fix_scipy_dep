@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Changes
 - `pp.adjmat` now returns the same features as used as input instead of the subset of `net`.
-
+- `pp.pseudobulk` now returns the same order features as used as input instead of shuffling them.
 
 ## 2.1.2
 
