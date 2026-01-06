@@ -55,7 +55,7 @@ def _run(
 ) -> tuple[pd.DataFrame, pd.DataFrame] | AnnData | None:
     _log(f"{name} - Running {name}", level="info", verbose=verbose)
     # Process data
-    mat, obs, var = extract(data, layer=layer, raw=raw, empty=empty, verbose=verbose, bsize=bsize)
+    mat, obs, var = extract(data, layer=layer, raw=raw, empty=empty, shuffle=True, verbose=verbose, bsize=bsize)
     issparse = sps.issparse(mat)
     isbacked = isinstance(mat, tuple)
     # Process net
