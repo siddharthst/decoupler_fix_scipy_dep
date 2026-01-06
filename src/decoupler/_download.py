@@ -1,12 +1,12 @@
 import io
 import time
+from importlib.metadata import version
 
 import pandas as pd
 import requests
 from tqdm import tqdm
 
 from decoupler._log import _log
-from importlib.metadata import version
 
 URL_DBS = "https://omnipathdb.org/annotations?databases="
 URL_INT = "https://omnipathdb.org/interactions/?genesymbols=1&"
@@ -20,9 +20,7 @@ def _download_chunks(
     # Download with progress bar
     chunks = []
     __version__ = version("decoupler")
-    headers = {
-        'User-Agent': f'decoupler/{__version__} (https://github.com/scverse/decoupler)'
-    }
+    headers = {"User-Agent": f"decoupler/{__version__} (https://github.com/scverse/decoupler)"}
     with requests.get(url, stream=True, headers=headers) as r:
         r.raise_for_status()
         with tqdm(unit="B", unit_scale=True, desc="Progress", disable=not verbose) as pbar:
