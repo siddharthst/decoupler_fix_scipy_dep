@@ -30,7 +30,7 @@ dependencies = [
   "marsilea",
   "numba",
   "requests",
-  "scipy", 
+  "scipy",
   # for debug logging (referenced from the issue template)
   "session-info2",
   "tqdm",
